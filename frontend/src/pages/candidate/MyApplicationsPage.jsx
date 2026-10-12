@@ -19,6 +19,7 @@ import Badge from '../../components/common/Badge';
 import DeadlineBadge from '../../components/common/DeadlineBadge';
 import Timeline from '../../components/common/Timeline';
 import Modal from '../../components/common/Modal';
+import CompanyLogo from '../../components/common/CompanyLogo';
 
 export const MyApplicationsPage = () => {
   const [applications, setApplications] = useState([]);
@@ -133,30 +134,36 @@ export const MyApplicationsPage = () => {
               key={app.id}
               className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-card hover:shadow-card-hover transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-6"
             >
-              {/* Left Info */}
-              <div className="space-y-3 flex-1">
-                <div className="flex flex-wrap items-center gap-3">
-                  <h3 className="text-lg font-bold text-slate-900">{app.jobTitle}</h3>
-                  <Badge status={app.status} />
-                  {app.interview && (
-                    <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-800 border border-purple-200 flex items-center gap-1">
-                      <Video className="w-3 h-3" />
-                      Interview: {app.interview.interviewDate}
-                    </span>
-                  )}
-                </div>
+              {/* Left Info with Company Logo */}
+              <div className="flex items-start gap-4 flex-1">
+                <CompanyLogo
+                  src={app.companyLogo}
+                  name={app.companyName}
+                  className="w-12 h-12 rounded-2xl flex-shrink-0 shadow-sm"
+                />
+                <div className="space-y-3 flex-1">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h3 className="text-lg font-bold text-slate-900">{app.jobTitle}</h3>
+                    <Badge status={app.status} />
+                    {app.interview && (
+                      <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1">
+                        <Video className="w-3 h-3" />
+                        Interview: {app.interview.interviewDate}
+                      </span>
+                    )}
+                  </div>
 
-                <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-xs text-slate-500 font-medium">
-                  <span className="font-semibold text-slate-700">{app.companyName}</span>
-                  <span>•</span>
-                  <span>{app.location}</span>
-                  <span>•</span>
-                  <span>Applied on {new Date(app.appliedAt).toLocaleDateString()}</span>
-                </div>
+                  <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-xs text-slate-500 font-medium">
+                    <span className="font-semibold text-slate-700">{app.companyName}</span>
+                    <span>•</span>
+                    <span>{app.location}</span>
+                    <span>•</span>
+                    <span>Applied on {new Date(app.appliedAt).toLocaleDateString()}</span>
+                  </div>
 
-                {/* Recruiter View Tracking Banner */}
-                {app.isViewed ? (
-                  <div className="p-3 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 flex flex-wrap items-center justify-between gap-2 text-xs text-blue-900">
+                  {/* Recruiter View Tracking Banner */}
+                  {app.isViewed ? (
+                    <div className="p-3 rounded-2xl bg-gradient-to-r from-[#121c38] to-[#0c1329] border border-blue-500/25 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-200">
                     <div className="flex items-center gap-2">
                       <div className="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center flex-shrink-0">
                         <Eye className="w-3.5 h-3.5" />
@@ -186,6 +193,7 @@ export const MyApplicationsPage = () => {
                     <span>Awaiting recruiter review. You will receive an instant notification once opened.</span>
                   </div>
                 )}
+              </div>
               </div>
 
               {/* Right Action */}
@@ -255,18 +263,18 @@ export const MyApplicationsPage = () => {
 
             {/* Scheduled Interview Card (if any) */}
             {selectedApp.interviews?.length > 0 && (
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200 space-y-4">
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-[#1a1438] to-[#0e1026] border border-purple-500/30 space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Video className="w-5 h-5 text-purple-600" />
-                    <h4 className="font-bold text-slate-900 text-sm">
+                    <Video className="w-5 h-5 text-purple-400" />
+                    <h4 className="font-bold text-slate-100 text-sm">
                       Interview Scheduled with Hiring Team
                     </h4>
                   </div>
                   <Badge status={selectedApp.interviews[0].candidateResponse} />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-700 bg-white/80 p-4 rounded-xl border border-purple-100">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-200 bg-[#0c1329]/80 p-4 rounded-xl border border-purple-500/20">
                   <div>
                     <span className="text-slate-500 block">Date & Time:</span>
                     <strong className="text-slate-900 text-sm">

@@ -19,6 +19,7 @@ import api from '../../services/api';
 import Badge from '../../components/common/Badge';
 import DeadlineBadge from '../../components/common/DeadlineBadge';
 import Modal from '../../components/common/Modal';
+import CompanyLogo from '../../components/common/CompanyLogo';
 import { useAuth } from '../../contexts/AuthContext';
 
 export const JobDetailsPage = () => {
@@ -131,17 +132,11 @@ export const JobDetailsPage = () => {
       <div className="p-8 rounded-3xl bg-white border border-slate-200/80 shadow-card">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-700 overflow-hidden flex-shrink-0">
-              {job.company?.logo ? (
-                <img
-                  src={job.company.logo}
-                  alt={job.company.companyName}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <Building className="w-8 h-8 text-slate-400" />
-              )}
-            </div>
+            <CompanyLogo
+              src={job.company?.logo}
+              name={job.company?.companyName}
+              className="w-16 h-16 rounded-2xl flex-shrink-0 shadow-md"
+            />
 
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-1">
@@ -250,17 +245,11 @@ export const JobDetailsPage = () => {
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-700 overflow-hidden flex-shrink-0">
-                {job.company?.logo ? (
-                  <img
-                    src={job.company.logo}
-                    alt={job.company.companyName}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <Building className="w-6 h-6 text-slate-400" />
-                )}
-              </div>
+              <CompanyLogo
+                src={job.company?.logo}
+                name={job.company?.companyName}
+                className="w-12 h-12 rounded-xl flex-shrink-0 shadow-sm"
+              />
               <div>
                 <h4 className="font-bold text-sm text-slate-900">{job.company?.companyName}</h4>
                 <p className="text-xs text-slate-500">{job.company?.industry}</p>
@@ -326,21 +315,21 @@ export const JobDetailsPage = () => {
             )}
           </div>
 
-          <div className="p-6 rounded-3xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200/80 shadow-card space-y-3">
-            <div className="flex items-center gap-2 text-blue-900 font-bold text-sm">
-              <ShieldCheck className="w-5 h-5 text-blue-600" />
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-[#121c38] to-[#0c1329] border border-blue-500/25 shadow-card space-y-3">
+            <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
+              <ShieldCheck className="w-5 h-5 text-amber-400" />
               <span>TechHire Transparency Guarantee</span>
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed">
+            <p className="text-xs text-slate-300 leading-relaxed">
               When you submit your application:
             </p>
-            <ul className="text-xs text-slate-600 space-y-2">
+            <ul className="text-xs text-slate-300 space-y-2">
               <li className="flex items-start gap-1.5">
-                <CheckCircle className="w-3.5 h-3.5 text-blue-600 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0 mt-0.5" />
                 <span>You receive an alert the exact second a recruiter opens your resume.</span>
               </li>
               <li className="flex items-start gap-1.5">
-                <CheckCircle className="w-3.5 h-3.5 text-blue-600 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0 mt-0.5" />
                 <span>Instant notifications for shortlisting & interview invites with date and time.</span>
               </li>
             </ul>

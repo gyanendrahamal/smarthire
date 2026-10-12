@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import api from '../../services/api';
 import Badge from '../../components/common/Badge';
+import CompanyLogo from '../../components/common/CompanyLogo';
 
 export const RecruiterDashboard = () => {
   const [data, setData] = useState(null);
@@ -55,13 +56,11 @@ export const RecruiterDashboard = () => {
       {/* Company Header Card */}
       <div className="p-8 rounded-3xl bg-slate-900 text-white shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex items-center gap-5">
-          <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white text-2xl overflow-hidden">
-            {company?.logo ? (
-              <img src={company.logo} alt={company.companyName} className="w-full h-full object-cover" />
-            ) : (
-              <Building className="w-8 h-8 text-white" />
-            )}
-          </div>
+          <CompanyLogo
+            src={company?.logo}
+            name={company?.companyName}
+            className="w-16 h-16 rounded-2xl flex-shrink-0 shadow-md"
+          />
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-extrabold tracking-tight">{company?.companyName}</h1>

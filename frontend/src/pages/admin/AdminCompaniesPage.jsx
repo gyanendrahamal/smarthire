@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Building, ShieldCheck, CheckCircle, XCircle } from 'lucide-react';
 import api from '../../services/api';
 import Badge from '../../components/common/Badge';
+import CompanyLogo from '../../components/common/CompanyLogo';
 
 export const AdminCompaniesPage = () => {
   const [companies, setCompanies] = useState([]);
@@ -67,13 +68,11 @@ export const AdminCompaniesPage = () => {
                 <tr key={c.id} className="hover:bg-slate-50/70 transition-colors">
                   <td className="px-6 py-4 font-bold text-slate-900">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-700 overflow-hidden">
-                        {c.logo ? (
-                          <img src={c.logo} alt={c.companyName} className="w-full h-full object-cover" />
-                        ) : (
-                          <Building className="w-5 h-5 text-slate-400" />
-                        )}
-                      </div>
+                      <CompanyLogo
+                        src={c.logo}
+                        name={c.companyName}
+                        className="w-10 h-10 rounded-xl flex-shrink-0 shadow-sm"
+                      />
                       <div>
                         <div>{c.companyName}</div>
                         {c.website && (

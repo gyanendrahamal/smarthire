@@ -78,6 +78,21 @@
     background-color: #1a2a4f !important;
   }
 
+  /* Protection against bright pastel gradients that create white spots */
+  .from-blue-50, .from-indigo-50, .from-purple-50, .from-slate-50 {
+    --tw-gradient-from: #121c38 var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: #0c1329 var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+  }
+
+  .to-blue-50, .to-indigo-50, .to-purple-50, .to-slate-50 {
+    --tw-gradient-to: #0c1329 var(--tw-gradient-to-position) !important;
+  }
+
+  .bg-white\/80, .bg-white\/90, .bg-white\/70 {
+    background-color: rgba(15, 23, 42, 0.9) !important;
+  }
+
   /* White Typography Overrides across all Tailwind color scales */
   .text-slate-900, .text-slate-800, .text-gray-900, .text-gray-800, .text-zinc-900, .text-zinc-800, .text-neutral-900, .text-neutral-800 {
     color: #ffffff !important; /* Bright Pure White */

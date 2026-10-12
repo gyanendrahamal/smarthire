@@ -17,6 +17,7 @@ import {
 import api from '../../services/api';
 import Badge from '../../components/common/Badge';
 import DeadlineBadge from '../../components/common/DeadlineBadge';
+import CompanyLogo from '../../components/common/CompanyLogo';
 import { useAuth } from '../../contexts/AuthContext';
 
 const US_CITIES = [
@@ -327,17 +328,11 @@ export const LandingPage = () => {
                 <div>
                   <div className="flex items-start justify-between gap-4 mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-700 overflow-hidden flex-shrink-0">
-                        {job.company?.logo ? (
-                          <img
-                            src={job.company.logo}
-                            alt={job.company.companyName}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <Building className="w-6 h-6 text-slate-400" />
-                        )}
-                      </div>
+                      <CompanyLogo
+                        src={job.company?.logo}
+                        name={job.company?.companyName}
+                        className="w-12 h-12 rounded-xl flex-shrink-0 shadow-sm"
+                      />
                       <div>
                         <div className="flex items-center gap-1.5">
                           <span className="text-xs font-bold text-slate-800">{job.company?.companyName}</span>

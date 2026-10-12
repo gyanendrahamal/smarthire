@@ -58,6 +58,11 @@ async function main() {
     },
   });
 
+  function createBrandSvg(initials, color1, color2, iconSvg) {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><defs><linearGradient id="bg-${initials}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="${color1}"/><stop offset="100%" stop-color="${color2}"/></linearGradient></defs><rect width="100" height="100" rx="26" fill="url(#bg-${initials})"/><rect width="98" height="98" x="1" y="1" rx="25" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/><g fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(26, 16) scale(2)">${iconSvg}</g><text x="50" y="86" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif" font-size="13" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">${initials}</text></svg>`;
+    return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+  }
+
   // 2. Verified Real USA Companies
   const techNova = await prisma.company.create({
     data: {
@@ -66,7 +71,7 @@ async function main() {
       industry: 'Enterprise Cloud & Distributed Systems',
       website: 'https://technova.io',
       location: 'San Francisco, CA',
-      logo: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&auto=format&fit=crop&q=80',
+      logo: createBrandSvg('TN', '#0ea5e9', '#1d4ed8', '<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>'),
       companySize: '1,200 - 2,500 employees',
       foundedYear: '2016',
       benefits: 'Comprehensive Medical/Dental/Vision, 401(k) 5% Match, Unlimited PTO, $2,500 Home Office & Tech Stipend, Annual Learning Budget',
@@ -81,7 +86,7 @@ async function main() {
       industry: 'DevOps & Cloud Observability',
       website: 'https://cloudscale.dev',
       location: 'Austin, TX',
-      logo: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=150&auto=format&fit=crop&q=80',
+      logo: createBrandSvg('CS', '#10b981', '#0f766e', '<path d="M18 20V10M12 20V4M6 20v-6"/>'),
       companySize: '450 - 800 employees',
       foundedYear: '2018',
       benefits: '100% Remote-First Culture, Flexible Working Hours, 401(k) Match, Wellness Allowance, Competitive Equity Options',
@@ -96,7 +101,7 @@ async function main() {
       industry: 'Digital Product Design & UX',
       website: 'https://apexdesign.nyc',
       location: 'New York, NY',
-      logo: 'https://images.unsplash.com/photo-1542744094-3a31727223ec?w=150&auto=format&fit=crop&q=80',
+      logo: createBrandSvg('AD', '#8b5cf6', '#c026d3', '<path d="m12 2-10 5 10 5 10-5-10-5zm-10 15 10 5 10-5M2 12l10 5 10-5"/>'),
       companySize: '150 - 300 employees',
       foundedYear: '2019',
       benefits: 'Hybrid Manhattan Office, Generous Equipment Stipend, Top-tier Health Coverage, Annual Team Offsites, Commuter Pass',
@@ -111,7 +116,7 @@ async function main() {
       industry: 'Artificial Intelligence & Machine Learning',
       website: 'https://quantumleap.ai',
       location: 'Seattle, WA',
-      logo: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=150&auto=format&fit=crop&q=80',
+      logo: createBrandSvg('QL', '#f59e0b', '#d97706', '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9zm0-8v3m6-3v3M9 20v3m6-3v3M1 9h3m-3 6h3m16-6h3m-3 6h3"/>'),
       companySize: '300 - 600 employees',
       foundedYear: '2021',
       benefits: 'Silicon Valley Equity Grants, 401(k), Premier Health/Dental/Vision, Generous AI Research Budget, Catered Lunches',
@@ -126,7 +131,7 @@ async function main() {
       industry: 'Cybersecurity & Zero-Trust',
       website: 'https://cybershield.security',
       location: 'Boston, MA',
-      logo: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=150&auto=format&fit=crop&q=80',
+      logo: createBrandSvg('CD', '#f43f5e', '#b91c1c', '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>'),
       companySize: '800 - 1,500 employees',
       foundedYear: '2015',
       benefits: 'Full Health & Life Coverage, Student Loan Repayment Support, 401(k) Match, Generous Parental Leave, Certification Sponsorship',
@@ -141,7 +146,7 @@ async function main() {
       industry: 'Big Data & Distributed Databases',
       website: 'https://datastream.io',
       location: 'Denver, CO',
-      logo: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=150&auto=format&fit=crop&q=80',
+      logo: createBrandSvg('DS', '#06b6d4', '#4338ca', '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>'),
       companySize: '250 - 500 employees',
       foundedYear: '2017',
       benefits: 'Outdoor Gear & Wellness Stipend, 401(k) 5% Match, Remote-First Setup, Premium Health Insurance, Sabbatical Program',
@@ -156,7 +161,7 @@ async function main() {
       industry: 'FinTech & Global Payments',
       website: 'https://vectorpay.com',
       location: 'Chicago, IL',
-      logo: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=150&auto=format&fit=crop&q=80',
+      logo: createBrandSvg('VP', '#10b981', '#d97706', '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>'),
       companySize: '600 - 1,200 employees',
       foundedYear: '2017',
       benefits: 'Performance Bonus Structure, Medical/Dental/Vision 100% Covered, Commuter Benefits, 401(k) Match, Gym Membership',
@@ -171,7 +176,7 @@ async function main() {
       industry: 'Consumer Tech & Digital Media',
       website: 'https://pulseinteractive.la',
       location: 'Los Angeles, CA',
-      logo: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=150&auto=format&fit=crop&q=80',
+      logo: createBrandSvg('PI', '#ec4899', '#7c3aed', '<path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5M12 12h.01M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5M19.1 4.9c3.9 3.9 3.9 10.3 0 14.2"/>'),
       companySize: '120 - 250 employees',
       foundedYear: '2020',
       benefits: 'Flexible Remote Schedule, Creative Project Grants, Medical/Dental Coverage, Mental Health Stipend, Annual Company Retreats',

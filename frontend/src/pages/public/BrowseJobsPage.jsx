@@ -18,6 +18,7 @@ import {
 import api from '../../services/api';
 import Badge from '../../components/common/Badge';
 import DeadlineBadge from '../../components/common/DeadlineBadge';
+import CompanyLogo from '../../components/common/CompanyLogo';
 import { useAuth } from '../../contexts/AuthContext';
 
 // Real USA Tech Hubs
@@ -405,17 +406,11 @@ export const BrowseJobsPage = () => {
                 {/* Company Logo, Title, and Verification */}
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="flex items-center gap-3.5">
-                    <div className="w-13 h-13 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-700 overflow-hidden flex-shrink-0 shadow-sm">
-                      {job.company?.logo ? (
-                        <img
-                          src={job.company.logo}
-                          alt={job.company.companyName}
-                          className="w-12 h-12 object-cover rounded-xl"
-                        />
-                      ) : (
-                        <Building className="w-6 h-6 text-slate-400" />
-                      )}
-                    </div>
+                    <CompanyLogo
+                      src={job.company?.logo}
+                      name={job.company?.companyName}
+                      className="w-13 h-13 rounded-2xl flex-shrink-0 shadow-sm"
+                    />
                     <div>
                       <div className="flex items-center gap-1.5">
                         <span className="font-bold text-xs text-slate-800">

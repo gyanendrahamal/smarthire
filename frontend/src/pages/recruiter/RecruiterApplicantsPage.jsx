@@ -321,8 +321,8 @@ export const RecruiterApplicantsPage = () => {
             </div>
 
             {/* Recruiter Action Bar: Core Flow Buttons */}
-            <div className="p-5 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 space-y-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-blue-900 block">
+            <div className="p-5 rounded-2xl bg-gradient-to-r from-[#121c38] to-[#0c1329] border border-blue-500/25 space-y-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-400 block">
                 Recruiter Decision Actions:
               </span>
               <div className="flex flex-wrap items-center gap-2.5">
