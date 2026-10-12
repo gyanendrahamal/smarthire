@@ -1,0 +1,281 @@
+// Prisma Schema for SmartHire Job Portal & ATS
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 1. Users Table
+model User {
+  id              String            @id @default(cuid())
+  fullName        String
+  email           String            @unique
+  passwordHash    String
+  role            String            @default("CANDIDATE") // CANDIDATE, RECRUITER, ADMIN
+  phone           String?
+  profileImage    String?
+  accountStatus   String            @default("ACTIVE") // ACTIVE, SUSPENDED, PENDING
+  emailVerifiedAt DateTime?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  candidateProfile CandidateProfile?
+  companyMembers   CompanyMember[]
+  jobsPosted       Job[]            @relation("JobsPostedByUser")
+  applications     Application[]    @relation("CandidateApplications")
+  resumes          Resume[]
+  savedJobs        SavedJob[]
+  notifications    Notification[]
+  adminAuditLogs   AdminAuditLog[]  @relation("AdminAuditLogs")
+  applicationViews ApplicationView[] @relation("RecruiterViews")
+  scheduledInterviews Interview[]   @relation("RecruiterInterviews")
+  applicationEvents ApplicationEvent[] @relation("ActorEvents")
+
+  @@index([email])
+  @@index([role])
+}
+
+// 2. Candidate Profiles Table
+model CandidateProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  headline    String?
+  location    String?
+  education   String?  // JSON stringified array of education records
+  experience  String?  // JSON stringified array of experience records
+  skills      String?  // JSON stringified array or comma-separated list of skills
+  bio         String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// 3. Companies Table
+model Company {
+  id                 String          @id @default(cuid())
+  companyName        String
+  description        String?
+  industry           String?
+  website            String?
+  location           String?
+  logo               String?
+  companySize        String?         // e.g. "250 - 500 employees"
+  foundedYear        String?         // e.g. "2018"
+  benefits           String?         // JSON stringified array or text of perks & benefits
+  verificationStatus String          @default("PENDING") // PENDING, VERIFIED, REJECTED
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  members            CompanyMember[]
+  jobs               Job[]
+
+  @@index([verificationStatus])
+}
+
+// 4. Company Members Table
+model CompanyMember {
+  id          String   @id @default(cuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  memberRole  String   @default("RECRUITER") // ADMIN, RECRUITER, HIRING_MANAGER
+  createdAt   DateTime @default(now())
+
+  @@unique([companyId, userId])
+}
+
+// 5. Jobs Table
+model Job {
+  id                  String        @id @default(cuid())
+  companyId           String
+  company             Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  postedBy            String
+  poster              User          @relation("JobsPostedByUser", fields: [postedBy], references: [id], onDelete: Cascade)
+  title               String
+  description         String
+  location            String
+  employmentType      String        @default("FULL_TIME") // FULL_TIME, PART_TIME, CONTRACT, INTERNSHIP
+  workMode            String        @default("ON_SITE")   // ON_SITE, HYBRID, REMOTE
+  salaryMin           Float?
+  salaryMax           Float?
+  experienceLevel     String?       // Entry, Mid, Senior, Lead
+  requirements        String?       // Qualifications / requirements
+  vacancies           Int           @default(1)
+  applicationDeadline DateTime?
+  status              String        @default("PUBLISHED") // DRAFT, PUBLISHED, CLOSED, ARCHIVED
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  applications        Application[]
+  savedByCandidates   SavedJob[]
+
+  @@index([companyId])
+  @@index([status])
+  @@index([applicationDeadline])
+}
+
+// 6. Resumes Table
+model Resume {
+  id               String        @id @default(cuid())
+  candidateId      String
+  candidate        User          @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  originalFilename String
+  storageKey       String
+  mimeType         String        @default("application/pdf")
+  fileSize         Int
+  uploadedAt       DateTime      @default(now())
+
+  applications     Application[]
+
+  @@index([candidateId])
+}
+
+// 7. Applications Table
+model Application {
+  id           String             @id @default(cuid())
+  jobId        String
+  job          Job                @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  candidateId  String
+  candidate    User               @relation("CandidateApplications", fields: [candidateId], references: [id], onDelete: Cascade)
+  resumeId     String?
+  resume       Resume?            @relation(fields: [resumeId], references: [id], onDelete: SetNull)
+  coverLetter  String?
+  status       String             @default("SUBMITTED") 
+  // Status: SUBMITTED, UNDER_REVIEW, SHORTLISTED, INTERVIEW_SCHEDULED, INTERVIEW_COMPLETED, OFFER_EXTENDED, HIRED, REJECTED, WITHDRAWN
+  appliedAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  withdrawnAt  DateTime?
+
+  events       ApplicationEvent[]
+  views        ApplicationView[]
+  interviews   Interview[]
+
+  @@unique([jobId, candidateId])
+  @@index([candidateId])
+  @@index([jobId])
+  @@index([status])
+}
+
+// 8. Application Events (Audit Trail & Timeline)
+model ApplicationEvent {
+  id             String      @id @default(cuid())
+  applicationId  String
+  application    Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  actorId        String?
+  actor          User?       @relation("ActorEvents", fields: [actorId], references: [id], onDelete: SetNull)
+  eventType      String      // SUBMITTED, VIEWED, RESUME_VIEWED, STATUS_UPDATED, SHORTLISTED, INTERVIEW_SCHEDULED, INTERVIEW_COMPLETED, OFFER_EXTENDED, HIRED, REJECTED, WITHDRAWN
+  previousStatus String?
+  newStatus      String?
+  eventTimestamp DateTime    @default(now())
+  metadata       String?     // JSON string for additional context (e.g. notes, interview location)
+
+  @@index([applicationId])
+  @@index([eventTimestamp])
+}
+
+// 9. Application Views (Authentic Recruiter View Tracking)
+model ApplicationView {
+  id            String      @id @default(cuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  recruiterId   String
+  recruiter     User        @relation("RecruiterViews", fields: [recruiterId], references: [id], onDelete: Cascade)
+  viewType      String      @default("APPLICATION_OPENED") // APPLICATION_OPENED, RESUME_OPENED
+  viewedAt      DateTime    @default(now())
+
+  @@index([applicationId])
+  @@index([recruiterId])
+}
+
+// 10. Interviews Table
+model Interview {
+  id                String      @id @default(cuid())
+  applicationId     String
+  application       Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  scheduledBy       String
+  scheduler         User        @relation("RecruiterInterviews", fields: [scheduledBy], references: [id], onDelete: Cascade)
+  interviewDate     String      // YYYY-MM-DD
+  startTime         String      // HH:MM
+  endTime           String?     // HH:MM
+  timezone          String      @default("UTC")
+  interviewMode     String      @default("ONLINE") // IN_PERSON, ONLINE, TELEPHONE
+  interviewLocation String?
+  meetingLink       String?
+  interviewerName   String?
+  instructions      String?
+  status            String      @default("SCHEDULED") // SCHEDULED, RESCHEDULED, COMPLETED, CANCELLED
+  candidateResponse String      @default("PENDING")   // PENDING, ACCEPTED, DECLINED, RESCHEDULE_REQUESTED
+  candidateNotes    String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  @@index([applicationId])
+  @@index([scheduledBy])
+}
+
+// 11. Notifications Table
+model Notification {
+  id                   String                 @id @default(cuid())
+  userId               String
+  user                 User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type                 String                 
+  // APPLICATION_SUBMITTED, APPLICATION_VIEWED, APPLICATION_SHORTLISTED, APPLICATION_REJECTED, INTERVIEW_SCHEDULED, INTERVIEW_RESCHEDULED, INTERVIEW_CANCELLED, DEADLINE_APPROACHING, OFFER_EXTENDED, HIRED
+  title                String
+  message              String
+  relatedApplicationId String?
+  relatedInterviewId   String?
+  isRead               Boolean                @default(false)
+  createdAt            DateTime               @default(now())
+  readAt               DateTime?
+
+  deliveries           NotificationDelivery[]
+
+  @@index([userId])
+  @@index([isRead])
+}
+
+// 12. Saved Jobs Table
+model SavedJob {
+  id          String   @id @default(cuid())
+  candidateId String
+  candidate   User     @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  jobId       String
+  job         Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  savedAt     DateTime @default(now())
+
+  @@unique([candidateId, jobId])
+  @@index([candidateId])
+}
+
+// 13. Notification Deliveries Table
+model NotificationDelivery {
+  id             String       @id @default(cuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  channel        String       @default("IN_APP") // IN_APP, EMAIL
+  deliveryStatus String       @default("SENT")   // PENDING, SENT, FAILED
+  attempts       Int          @default(1)
+  sentAt         DateTime?
+  errorMessage   String?
+
+  @@index([notificationId])
+}
+
+// 14. Admin Audit Logs Table
+model AdminAuditLog {
+  id         String   @id @default(cuid())
+  adminId    String
+  admin      User     @relation("AdminAuditLogs", fields: [adminId], references: [id], onDelete: Cascade)
+  action     String
+  targetType String
+  targetId   String?
+  details    String?
+  timestamp  DateTime @default(now())
+
+  @@index([adminId])
+  @@index([action])
+}

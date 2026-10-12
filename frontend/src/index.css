@@ -1,0 +1,285 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-main: #0a1128; /* Dark Navy */
+    --bg-card: #0f172a; /* Deep Navy Card */
+    --bg-subcard: #0d162d;
+    --border-color: #1e293b;
+    --gold-bright: #fef08a; /* Bright Champagne Gold */
+    --gold-primary: #fde047; /* Radiant Gold */
+    --gold-amber: #fbbf24; /* Warm Amber Gold */
+    --gold-muted: #d4af37; /* Antique Gold */
+    --gold-dark: #a1824a; /* Deep Gold/Bronze */
+  }
+
+  body {
+    background-color: #0a1128 !important;
+    background-image: none !important;
+    color: #ffffff; /* Crisp White Body Text */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color-scheme: dark;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    color: #ffffff; /* Bright White Headings */
+  }
+
+  p, span, label, li, dt, dd, th, td, strong, b, em, i, small {
+    color: #f1f5f9;
+  }
+
+  a {
+    color: #ffffff;
+  }
+
+  input, select, textarea {
+    background-color: #0d162d !important;
+    border-color: #1e293b !important;
+    color: #ffffff !important;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: #94a3b8 !important;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
+    outline: none !important;
+  }
+}
+
+/* Dark Navy Theme Utility Overrides */
+@layer utilities {
+  .bg-white {
+    background-color: #0f172a !important;
+    border: 1px solid rgba(59, 130, 246, 0.18) !important;
+  }
+
+  .bg-\[\#0d0f14\],
+  .bg-\[\#F8FAFC\] {
+    background-color: #0a1128 !important;
+  }
+
+  .bg-slate-50, .bg-slate-50\/50, .bg-slate-50\/60, .bg-slate-50\/70 {
+    background-color: #0c152b !important;
+    border: 1px solid rgba(59, 130, 246, 0.15) !important;
+  }
+
+  .bg-slate-100 {
+    background-color: #13203d !important;
+  }
+
+  .bg-slate-200 {
+    background-color: #1a2a4f !important;
+  }
+
+  /* White Typography Overrides across all Tailwind color scales */
+  .text-slate-900, .text-slate-800, .text-gray-900, .text-gray-800, .text-zinc-900, .text-zinc-800, .text-neutral-900, .text-neutral-800 {
+    color: #ffffff !important; /* Bright Pure White */
+  }
+
+  .text-slate-700, .text-slate-600, .text-gray-700, .text-gray-600, .text-zinc-700, .text-zinc-600, .text-neutral-700, .text-neutral-600 {
+    color: #f8fafc !important; /* Crisp White Body */
+  }
+
+  .text-slate-500, .text-slate-400, .text-gray-500, .text-gray-400, .text-zinc-500, .text-zinc-400, .text-neutral-500, .text-neutral-400 {
+    color: #cbd5e1 !important; /* Clean Light Silver-White for Secondary/Muted Text */
+  }
+
+  .text-slate-300, .text-slate-200, .text-slate-100, .text-gray-300, .text-gray-200, .text-gray-100 {
+    color: #ffffff !important; /* Pure White */
+  }
+
+  .text-white {
+    color: #ffffff !important; /* Pure White */
+  }
+
+  .text-blue-500, .text-blue-600, .text-blue-700, .text-blue-800, .text-blue-900 {
+    color: #fbbf24 !important; /* Amber Gold */
+  }
+
+  .text-indigo-400, .text-indigo-500, .text-indigo-600, .text-indigo-700, .text-indigo-800, .text-indigo-900 {
+    color: #f59e0b !important;
+  }
+
+  .text-purple-400, .text-purple-500, .text-purple-600, .text-purple-700 {
+    color: #fcd34d !important;
+  }
+
+  .text-cyan-400, .text-cyan-500, .text-cyan-600 {
+    color: #fde047 !important;
+  }
+
+  .text-emerald-500, .text-emerald-600, .text-emerald-700, .text-emerald-800,
+  .text-green-500, .text-green-600, .text-green-700, .text-green-800,
+  .text-teal-400, .text-teal-500, .text-teal-600, .text-teal-700 {
+    color: #fde047 !important;
+  }
+
+  .text-amber-500, .text-amber-600, .text-amber-700, .text-amber-800 {
+    color: #f59e0b !important;
+  }
+
+  .text-yellow-400, .text-yellow-500, .text-yellow-600 {
+    color: #fef08a !important;
+  }
+
+  /* Buttons & Action Links */
+  .bg-blue-600 {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(251, 191, 36, 0.45) !important;
+  }
+
+  .bg-blue-600:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35) !important;
+  }
+
+  .bg-blue-700 {
+    background: linear-gradient(135deg, #b45309 0%, #92400e 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(251, 191, 36, 0.4) !important;
+  }
+
+  .bg-slate-900 {
+    background-color: #1a1e28 !important;
+    border: 1px solid rgba(251, 191, 36, 0.3) !important;
+    color: #ffffff !important;
+  }
+
+  .bg-slate-900:hover {
+    background-color: #242a38 !important;
+    border-color: rgba(251, 191, 36, 0.6) !important;
+  }
+
+  .bg-slate-800 {
+    background-color: #1e2330 !important;
+    border-color: rgba(251, 191, 36, 0.25) !important;
+    color: #ffffff !important;
+  }
+
+  /* Borders with subtle golden/bronze warmth */
+  .border-slate-100 {
+    border-color: #241d13 !important;
+  }
+
+  .border-slate-200, .border-slate-200\/80, .border-slate-200\/90 {
+    border-color: #332819 !important;
+  }
+
+  .border-slate-300 {
+    border-color: #4a3b22 !important;
+  }
+
+  .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+    border-color: #261f14 !important;
+  }
+
+  .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
+    border-color: #332819 !important;
+  }
+
+  /* Badge Dark Theme Overrides with Golden highlights */
+  .bg-blue-50, .bg-blue-50\/60, .bg-blue-50\/70 {
+    background-color: rgba(69, 48, 13, 0.35) !important;
+    color: #fde047 !important;
+    border-color: rgba(245, 158, 11, 0.4) !important;
+  }
+
+  .bg-purple-50 {
+    background-color: rgba(79, 53, 15, 0.35) !important;
+    color: #fef08a !important;
+    border-color: rgba(251, 191, 36, 0.4) !important;
+  }
+
+  .bg-indigo-50, .bg-indigo-50\/60 {
+    background-color: rgba(60, 42, 12, 0.35) !important;
+    color: #fcd34d !important;
+    border-color: rgba(217, 119, 6, 0.4) !important;
+  }
+
+  .bg-teal-50, .bg-teal-50\/60 {
+    background-color: rgba(50, 45, 15, 0.35) !important;
+    color: #fef08a !important;
+    border-color: rgba(234, 179, 8, 0.4) !important;
+  }
+
+  .bg-emerald-50, .bg-emerald-100 {
+    background-color: rgba(45, 60, 15, 0.35) !important;
+    color: #fde047 !important;
+    border-color: rgba(202, 138, 4, 0.4) !important;
+  }
+
+  .bg-rose-50, .bg-rose-100 {
+    background-color: rgba(90, 25, 20, 0.35) !important;
+    color: #fca5a5 !important;
+    border-color: rgba(248, 113, 113, 0.4) !important;
+  }
+
+  .bg-amber-50, .bg-amber-100 {
+    background-color: rgba(80, 50, 10, 0.4) !important;
+    color: #fef08a !important;
+    border-color: rgba(251, 191, 36, 0.5) !important;
+  }
+
+  /* Cards & Shadows */
+  .shadow-card {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 2px 6px -1px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  .shadow-card-hover:hover {
+    box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.7), 0 4px 10px -2px rgba(251, 191, 36, 0.15) !important;
+    border-color: #fbbf24 !important;
+  }
+}
+
+/* Glassmorphism Dark Navy utility */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.9) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(59, 130, 246, 0.22) !important;
+}
+
+.glass-dark {
+  background: rgba(10, 17, 40, 0.92) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Custom dark navy scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a1128;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+
+/* Pulse animation for live indicators */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

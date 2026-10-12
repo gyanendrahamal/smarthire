@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  <defs>
+    <!-- Metallic 3D Gold Gradient for Main Rim -->
+    <linearGradient id="goldStroke" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#fff9c4" />
+      <stop offset="20%" stop-color="#fde047" />
+      <stop offset="50%" stop-color="#eab308" />
+      <stop offset="75%" stop-color="#ca8a04" />
+      <stop offset="90%" stop-color="#854d0e" />
+      <stop offset="100%" stop-color="#451a03" />
+    </linearGradient>
+
+    <!-- Left Highlight Gradient for 3D Bevel Facet -->
+    <linearGradient id="goldFacet" x1="0%" y1="30%" x2="100%" y2="70%">
+      <stop offset="0%" stop-color="rgba(254, 240, 138, 0.55)" />
+      <stop offset="35%" stop-color="rgba(234, 179, 8, 0.25)" />
+      <stop offset="70%" stop-color="rgba(113, 63, 18, 0.15)" />
+      <stop offset="100%" stop-color="rgba(0, 0, 0, 0.9)" />
+    </linearGradient>
+
+    <!-- Deep obsidian dark scale interior -->
+    <radialGradient id="scaleDark" cx="50%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#16171a" />
+      <stop offset="60%" stop-color="#0a0a0d" />
+      <stop offset="100%" stop-color="#020203" />
+    </radialGradient>
+
+    <!-- Single Pointed Scale definition -->
+    <g id="dragonScale">
+      <!-- Scale Body Fill -->
+      <path
+        d="M 30,0 
+           C 13,0 0,9 0,20 
+           C 0,38 20,51 30,59 
+           C 40,51 60,38 60,20 
+           C 60,9 47,0 30,0 Z"
+        fill="url(#scaleDark)"
+      />
+      <!-- Inner 3D Bevel Facet -->
+      <path
+        d="M 30,2.5 
+           C 15,2.5 2.5,10.5 2.5,20 
+           C 2.5,36 21,48 30,56 
+           C 39,48 57.5,36 57.5,20 
+           C 57.5,10.5 45,2.5 30,2.5 Z"
+        fill="url(#goldFacet)"
+      />
+      <!-- Deep Inner Cutout for High Contrast Black Core -->
+      <path
+        d="M 30,5 
+           C 17,5 5.5,12 5.5,20 
+           C 5.5,34.5 22,45.5 30,53 
+           C 38,45.5 54.5,34.5 54.5,20 
+           C 54.5,12 43,5 30,5 Z"
+        fill="#050507"
+      />
+      <!-- Main Golden Outline Stroke -->
+      <path
+        d="M 30,0 
+           C 13,0 0,9 0,20 
+           C 0,38 20,51 30,59 
+           C 40,51 60,38 60,20 
+           C 60,9 47,0 30,0 Z"
+        fill="none"
+        stroke="url(#goldStroke)"
+        stroke-width="1.8"
+        stroke-linejoin="round"
+      />
+      <!-- Sharp Golden Point Edge Highlight -->
+      <path
+        d="M 24,49 C 27,53 30,58 30,59 C 30,58 33,53 36,49"
+        fill="none"
+        stroke="#fef08a"
+        stroke-width="1.6"
+        stroke-linecap="round"
+      />
+    </g>
+  </defs>
+
+  <!-- Pitch Black Base -->
+  <rect width="60" height="60" fill="#040405" />
+
+  <!-- Layer 1: Top Row (y = -30) -->
+  <use href="#dragonScale" x="-30" y="-30" />
+  <use href="#dragonScale" x="30" y="-30" />
+
+  <!-- Layer 2: Main Middle Row (y = 0) -->
+  <use href="#dragonScale" x="0" y="0" />
+  <use href="#dragonScale" x="-60" y="0" />
+  <use href="#dragonScale" x="60" y="0" />
+
+  <!-- Layer 3: Offset Row (y = 30) -->
+  <use href="#dragonScale" x="-30" y="30" />
+  <use href="#dragonScale" x="30" y="30" />
+
+  <!-- Layer 4: Bottom Row (y = 60) for seamless wrap -->
+  <use href="#dragonScale" x="0" y="60" />
+  <use href="#dragonScale" x="-60" y="60" />
+  <use href="#dragonScale" x="60" y="60" />
+</svg>
