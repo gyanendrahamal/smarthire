@@ -18,6 +18,7 @@
     "prisma:generate": "npm run prisma:generate --prefix backend",
     "prisma:migrate": "npm run prisma:migrate --prefix backend",
     "prisma:seed": "npm run prisma:seed --prefix backend",
+    "db:init": "npm run prisma:push --prefix backend && npm run prisma:seed --prefix backend",
     "test": "npm run test --prefix backend"
   },
   "keywords": [
