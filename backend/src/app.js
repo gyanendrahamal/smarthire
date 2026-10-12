@@ -25,7 +25,20 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: [config.frontendUrl, 'http://localhost:5173', 'http://127.0.0.1:5173'],
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (
+      origin === config.frontendUrl ||
+      origin.includes('localhost') ||
+      origin.includes('127.0.0.1') ||
+      origin.includes('vercel.app') ||
+      origin.includes('onrender.com') ||
+      origin.includes('railway.app')
+    ) {
+      return callback(null, true);
+    }
+    return callback(null, true);
+  },
   credentials: true,
 }));
 
@@ -53,6 +66,20 @@ app.use('/api/recruiter', recruiterRoutes);
 app.use('/api/interviews', interviewRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/admin', adminRoutes);
+
+// Serve frontend production build if available
+const frontendDist = path.resolve(__dirname, '../../frontend/dist');
+app.use(express.static(frontendDist));
+
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/uploads') || req.path.startsWith('/socket.io')) {
+    return next();
+  }
+  const indexHtml = path.join(frontendDist, 'index.html');
+  res.sendFile(indexHtml, (err) => {
+    if (err) next();
+  });
+});
 
 // Global Error Handler
 app.use(errorHandler);
