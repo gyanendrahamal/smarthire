@@ -263,31 +263,31 @@ export const JobDetailsPage = () => {
             )}
 
             {/* Quick Company Facts */}
-            <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-2 text-xs text-slate-700">
+            <div className="p-4 rounded-2xl bg-[#0c152b] border border-blue-500/20 space-y-2.5 text-xs text-slate-300">
               <div className="flex items-center justify-between">
-                <span className="text-slate-500">Headquarters:</span>
-                <span className="font-semibold text-slate-900">📍 {job.company?.location || 'USA'}</span>
+                <span className="text-slate-400 font-medium">Headquarters:</span>
+                <span className="font-semibold text-white">📍 {job.company?.location || 'USA'}</span>
               </div>
               {job.company?.companySize && (
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-500">Company Size:</span>
-                  <span className="font-semibold text-slate-900">👥 {job.company.companySize}</span>
+                  <span className="text-slate-400 font-medium">Company Size:</span>
+                  <span className="font-semibold text-white">👥 {job.company.companySize}</span>
                 </div>
               )}
               {job.company?.foundedYear && (
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-500">Founded:</span>
-                  <span className="font-semibold text-slate-900">📅 {job.company.foundedYear}</span>
+                  <span className="text-slate-400 font-medium">Founded:</span>
+                  <span className="font-semibold text-white">📅 {job.company.foundedYear}</span>
                 </div>
               )}
               {job.company?.website && (
-                <div className="flex items-center justify-between pt-1 border-t border-slate-200/60">
-                  <span className="text-slate-500">Official Site:</span>
+                <div className="flex items-center justify-between pt-2 border-t border-slate-800">
+                  <span className="text-slate-400 font-medium">Official Site:</span>
                   <a
                     href={job.company.website}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-blue-600 font-bold hover:underline truncate max-w-[150px]"
+                    className="text-amber-400 hover:text-amber-300 font-bold hover:underline truncate max-w-[160px] transition-colors"
                   >
                     {job.company.website.replace('https://', '')}
                   </a>
